@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product Details{% endblock %}
+
+{% block body %}
+    <h1 class="text-center">Product Details</h1>
+
+    <div class="card mt-4">
+        <div class="card-header bg-primary text-white">
+            <h3>{{ product.name }}</h3>
+        </div>
+        <div class="card-body">
+            <p><strong>Price:</strong> ${{ product.price }}</p>
+            <p><strong>Description:</strong> {{ product.description }}</p>
+            <p><strong>Created At:</strong> {{ product.createdAt|date('Y-m-d H:i') }}</p>
+        </div>
+        <div class="card-footer">
+            <a href="{{ path('product_index') }}" class="btn btn-secondary">Back to List</a>
+            <a href="{{ path('product_edit', {id: product.id}) }}" class="btn btn-warning">Edit</a>
+            <form method="post" action="{{ path('product_delete', {id: product.id}) }}" onsubmit="return confirm('Are you sure?');" style="display:inline;">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ product.id) }}">
+                <button class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+
